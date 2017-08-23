@@ -15,7 +15,6 @@
     "dedent": "^0.7.0",
     "dependent-counts": "^2.0.0",
     "download-counts": "^1.72.0",
-    "mkdirp": "^0.5.1",
     "ora": "^1.2.0",
     "package-stream": "^3.0.0",
     "pluralize": "^4.0.0",

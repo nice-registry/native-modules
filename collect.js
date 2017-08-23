@@ -1,7 +1,6 @@
 const registry = require('package-stream')()
 const path = require('path')
 const fs = require('fs')
-const mkdirp = require('mkdirp').sync
 const ora = require('ora')
 const spinner = ora().start()
 let count = 0
@@ -18,8 +17,7 @@ registry
         (pkg.devDependencies && pkg.devDependencies.nan)
       )
     ) {
-      const file = path.join(__dirname, `packages/${pkg.name}.json`)
-      mkdirp(path.dirname(file))
+      const file = path.join(__dirname, `packages/${pkg.name.replace('/', '___')}.json`)
       fs.writeFileSync(file, JSON.stringify(pkg))
       console.log()
       console.log([pkg.name, pkg.description].join(' - '))
