@@ -1,7 +1,7 @@
 {
   "name": "native-modules",
   "version": "1.0.0",
-  "description": "a list of javascript modules with C++ addons",
+  "description": "a list of JavaScript modules with C++ addons",
   "main": "index.js",
   "repository": "https://github.com/nice-registry/native-modules",
   "author": "zeke",

@@ -2,7 +2,7 @@
 
 # Native Modules
 
-> a list of 1634 javascript javascript modules with C++ addons
+> a list of 1634 JavaScript modules with C++ addons
 
 Find more datasets like this at 
 [nice-registry/about](https://github.com/nice-registry/about#datasets).
