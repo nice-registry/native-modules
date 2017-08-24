@@ -15,7 +15,6 @@ This list is created by:
 1. Plucking out packages that depend or devDepend on [nan](http://ghub.io/nan)
 1. Sorting results by [average daily downloads](http://ghub.io/download-counts) and [direct dependents](http://ghub.io/dependent-counts) counts.
 
-
 ## Modules
 1. [fsevents](http://ghub.io/fsevents) - Native Access to Mac OS-X FSEvents (103325 downloads/day; 83 direct dependents)
 2. [node-gyp](http://ghub.io/node-gyp) - Node.js native addon build tool (96255 downloads/day; 272 direct dependents)
