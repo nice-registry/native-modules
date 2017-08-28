@@ -6,31 +6,30 @@ const dedent = require('dedent')
 const {chain} = require('lodash')
 const {snakeCase} = require('change-case')
 const MAX = 50
-const criteria = fs.readFileSync(path.join(__dirname, 'lib/check-package.js'), 'utf8')
 
 function pkgLink(pkg) {
   return `<a href="http://ghub.io/${pkg.name}">${pkg.name}</a>`
 }
 
 let datasets = {
-  'top modules depending on `nan`, by dep count': {
+  'top dependents of `nan` by dependent count': {
     data: chain(packages)
-      .filter(pkg => pkg.dependencies && pkg.dependencies.nan)
+      .filter(pkg => pkg.somehowDependsOn('nan'))
       .orderBy('dependentCounts.totalDirectDependents', 'desc')
       .slice(0, MAX)  
       .map(pkg => {
         return {
           name: pkgLink(pkg),
           description: pkg.description,
-          deps: pkg.dependentCounts.totalDirectDependents
+          dependents: pkg.dependentCounts.totalDirectDependents
         }
       })
       .value()
   },
 
-  'top modules depending on `nan`, by daily download count': {
+  'top dependents of `nan` by daily download count': {
     data: chain(packages)
-      .filter(pkg => pkg.dependencies && pkg.dependencies.nan)
+      .filter(pkg => pkg.somehowDependsOn('nan'))
       .orderBy('averageDailyDownloads', 'desc')
       .slice(0, MAX)  
       .map(pkg => {
@@ -38,6 +37,21 @@ let datasets = {
           name: pkgLink(pkg),
           description: pkg.description,
           downloads: pkg.averageDailyDownloads
+        }
+      })
+      .value()
+  },
+
+  'all packages dependent on `prebuild`': {
+    data: chain(packages)
+      .filter(pkg => pkg.somehowDependsOn('prebuild'))
+      .orderBy('averageDailyDownloads', 'desc')
+      .map(pkg => {
+        return {
+          name: pkgLink(pkg),
+          description: pkg.description,
+          downloads: pkg.averageDailyDownloads,
+          dependents: pkg.dependentCounts.totalDirectDependents
         }
       })
       .value()
@@ -60,19 +74,19 @@ Find more datasets like this at
 
 ## How?
 
-This list is created bu consuming the entire npm registry using 
-[package-stream](http://ghub.io/package-stream), filtering out
-packages that match certain criteria,
-then adding [average daily downloads](http://ghub.io/download-counts) and 
-[direct dependents](http://ghub.io/dependent-counts) counts.
-
-The criteria:
-
-\`\`\`js
-${criteria}
-\`\`\`
+This list is created by consuming the entire npm registry using 
+[package-stream](http://ghub.io/package-stream), collecting all
+packages that depend (or devDepend) on 
+[nan](http://ghub.io/nan),
+[node-pre-gyp](http://ghub.io/node-pre-gyp),
+[prebuild](http://ghub.io/prebuild), or
+[prebuildify](http://ghub.io/prebuildify).
+Then [average daily downloads](http://ghub.io/download-counts) and 
+[direct dependents](http://ghub.io/dependent-counts) counts are added
+to the collected packages so they can be sorted by popularity.
 
 ## Lists
+
 `)
 
 Object.keys(datasets).forEach(title => {
@@ -84,4 +98,5 @@ Object.keys(datasets).forEach(title => {
   const {data, slug} = datasets[title]
   console.log(`\n\n<h2 id="${slug}">${title}</h2>`)
   console.log(tableify(data))
+  console.log('<br><br><br><br><br><br>')
 })
