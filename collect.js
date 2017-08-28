@@ -11,7 +11,7 @@ registry
     if (checkPackage(pkg)) savePackage(pkg)
   })
   .on('up-to-date', function () {
-    console.log('Done.')
+    console.log('\nDone!')
     process.exit()
   })
 
