@@ -42,9 +42,24 @@ let datasets = {
       .value()
   },
 
-  'all packages dependent on `prebuild`': {
+  'all dependents of `prebuild`': {
     data: chain(packages)
       .filter(pkg => pkg.somehowDependsOn('prebuild'))
+      .orderBy('averageDailyDownloads', 'desc')
+      .map(pkg => {
+        return {
+          name: pkgLink(pkg),
+          description: pkg.description,
+          downloads: pkg.averageDailyDownloads,
+          dependents: pkg.dependentCounts.totalDirectDependents
+        }
+      })
+      .value()
+  },
+
+  'all dependents of `prebuildify`': {
+    data: chain(packages)
+      .filter(pkg => pkg.somehowDependsOn('prebuildify'))
       .orderBy('averageDailyDownloads', 'desc')
       .map(pkg => {
         return {
