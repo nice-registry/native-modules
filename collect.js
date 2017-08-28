@@ -1,28 +1,23 @@
 const registry = require('package-stream')()
 const path = require('path')
 const fs = require('fs')
-const ora = require('ora')
-const spinner = ora().start()
+const spinner = require('ora')().start()
+const checkPackage = require('./lib/check-package')
 let count = 0
 
 registry
   .on('package', function (pkg) {
     spinner.text = String(++count)
-    if (
-      pkg && 
-      pkg.name && 
-      pkg.description && 
-      (
-        (pkg.dependencies && pkg.dependencies.nan) || 
-        (pkg.devDependencies && pkg.devDependencies.nan)
-      )
-    ) {
-      const file = path.join(__dirname, `packages/${pkg.name.replace('/', '___')}.json`)
-      fs.writeFileSync(file, JSON.stringify(pkg))
-      console.log()
-      console.log([pkg.name, pkg.description].join(' - '))
-    }
+    if (checkPackage(pkg)) savePackage(pkg)
   })
   .on('up-to-date', function () {
+    console.log('Done.')
     process.exit()
   })
+
+  function savePackage (pkg) {
+    const file = path.join(__dirname, `packages/${pkg.name.replace('/', '___')}.json`)
+    fs.writeFileSync(file, JSON.stringify(pkg))
+    console.log()
+    console.log([pkg.name, pkg.description].join(' - '))
+  }

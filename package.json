@@ -12,12 +12,16 @@
     "render": "node render.js > readme.md"
   },
   "devDependencies": {
+    "change-case": "^3.0.1",
     "dedent": "^0.7.0",
     "dependent-counts": "^2.0.0",
     "download-counts": "^1.72.0",
+    "lodash": "^4.17.4",
+    "mos": "^1.3.1",
     "ora": "^1.2.0",
     "package-stream": "^3.0.0",
     "pluralize": "^4.0.0",
-    "require-dir": "^0.3.1"
+    "require-dir": "^0.3.1",
+    "tableify": "^1.1.0"
   }
 }
