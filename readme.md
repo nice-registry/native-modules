@@ -14,7 +14,8 @@ This list is created by consuming the entire npm registry using
 packages that depend (or devDepend) on 
 [nan](http://ghub.io/nan),
 [node-pre-gyp](http://ghub.io/node-pre-gyp),
-[prebuild](http://ghub.io/prebuild), or
+[prebuild](http://ghub.io/prebuild), 
+[prebuild-install](http://ghub.io/prebuild-install), or
 [prebuildify](http://ghub.io/prebuildify).
 Then [average daily downloads](http://ghub.io/download-counts) and 
 [direct dependents](http://ghub.io/dependent-counts) counts are added
